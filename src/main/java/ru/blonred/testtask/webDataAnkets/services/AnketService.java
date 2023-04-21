@@ -27,6 +27,14 @@ public class AnketService {
         anketRepository.save(anket);
     }
 
+    public void deleteAnket(Long id) {
+        anketRepository.deleteById(id);
+    }
+
+    public Anket getAnketById(Long id) {
+        return anketRepository.findById(id).orElse(null);
+    }
+
     public Anket createAnketFromCsv(MultipartFile uploadCsv) {
         Anket newAnketCsv = new Anket();
         List<String> listFromCsv = getListFromCsv(uploadCsv);
@@ -39,15 +47,7 @@ public class AnketService {
         return newAnketCsv;
     }
 
-    public void deleteAnket(Long id) {
-        anketRepository.deleteById(id);
-    }
-
-    public Anket getAnketById(Long id) {
-        return anketRepository.findById(id).orElse(null);
-    }
-
-    public List<String> getListFromCsv(MultipartFile csv) {
+    private List<String> getListFromCsv(MultipartFile csv) {
 
         List<String> result = new ArrayList<>();
         try {
@@ -64,7 +64,7 @@ public class AnketService {
         return result;
     }
 
-    public void setDataInAnket (int count, String value, Anket newAnket){
+    private void setDataInAnket (int count, String value, Anket newAnket){
         switch (count){
             case 0:
                 newAnket.setFirstName(value);
