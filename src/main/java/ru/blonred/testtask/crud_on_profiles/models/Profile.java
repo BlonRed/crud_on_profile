@@ -1,4 +1,4 @@
-package ru.blonred.testtask.webDataAnkets.models;
+package ru.blonred.testtask.crud_on_profiles.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ankets")
+@Table(name = "profiles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Anket {
+public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -28,5 +28,4 @@ public class Anket {
     private String dateB;
     @Column(name = "mail")
     private String mail;
-
 }
