@@ -5,9 +5,10 @@
 </head>
 <body>
 <a href="/">На главную</a><br><br>
-<h1><#if add>Создание новой карточки<#else>Редактирование карточки</#if></h1><hr>
+<h1><#if add>Создание новой карточки<#else>Редактирование карточки</#if></h1>
+<hr>
 <#if add>
-    <#assign urlAction>/add</#assign>
+    <#assign urlAction>/profile/add</#assign>
     <#assign submitTitle>Создать</#assign>
     <#else>
     <#assign urlAction>/profile/${profile.id}/edit</#assign>
@@ -31,26 +32,23 @@
         </tr>
         <tr>
             <td>Страна:</td>
-            <td><input type="text" name="country" required value="${(profile.country)!''}"/></td>
+            <td><input type="text" name="country" value="${(profile.country)!''}"/></td>
         </tr>
         <tr>
             <td>Город:</td>
-            <td><input type="text" name="city" required value="${(profile.city)!''}"/></td>
+            <td><input type="text" name="city" value="${(profile.city)!''}"/></td>
         </tr>
         <tr>
             <td>Дата рождения:</td>
-            <td><input type="text" name="dateB" required value="${(profile.dateB)!''}"/></td>
+            <td><input type="text" name="dateB" value="${(profile.dateB)!''}"/></td>
         </tr>
         <tr>
             <td>@mail:</td>
-            <td><input type="text" name="mail" required value="${(profile.mail)!''}"/></td>
+            <td><input type="text" name="mail" value="${(profile.mail)!''}"/></td>
         </tr>
     </table>
     <input type="submit" value="${submitTitle}" formmethod="post"/>
 </form>
 <hr><br>
-<#if message?has_content>
-    <div class="error">${message}</div>
-</#if>
 </body>
 </html>

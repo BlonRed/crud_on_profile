@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileFromCsv {
-    private static Profile newProfileFromCsv;
-    public static Profile createProfileFromCsv(MultipartFile uploadCsv) {
+    private volatile static Profile newProfileFromCsv;
+
+    public synchronized static Profile createProfileFromCsv(MultipartFile uploadCsv) throws Exception {
         newProfileFromCsv = new Profile();
         List<String[]> listFromCsv = getListColumnFromCsv(uploadCsv);
         for (String[] currentColumn : listFromCsv) {
@@ -21,7 +22,7 @@ public class ProfileFromCsv {
         return newProfileFromCsv;
     }
 
-    private static List<String[]> getListColumnFromCsv(MultipartFile csv) {
+    private synchronized static List<String[]> getListColumnFromCsv(MultipartFile csv) {
         List<String[]> listColumnFromCsv = new ArrayList<>();
         try {
             String line;
@@ -37,7 +38,7 @@ public class ProfileFromCsv {
         return listColumnFromCsv;
     }
 
-    private static void setValueFromColumnInProfile(String[] column) {
+    private synchronized static void setValueFromColumnInProfile(String[] column) throws Exception {
         String nameColumn = column[0].replaceAll("\\W", "");
         String value = column[1];
         switch (nameColumn.toLowerCase()) {
@@ -60,7 +61,7 @@ public class ProfileFromCsv {
                 newProfileFromCsv.setMail(value);
                 break;
             default:
-                throw new RuntimeException("Illegal Value of Column in \".csv\" file: " + value);
+                throw new Exception("Illegal name of Column in \".csv\" file: " + nameColumn);
         }
     }
 }

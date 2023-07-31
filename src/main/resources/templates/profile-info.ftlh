@@ -38,10 +38,9 @@
 <form action="/profile/${profile.id}/delete/" method="post">
     <input type="submit" value="Удалить карточку"/>
 </form>
-<a href="/profile/${profile.id}/edit">Редактировать</a>
+<form action="/profile/${profile.id}/edit" method="get">
+    <input type="submit" value="Редактировать карточку"/>
+</form>
 </body>
 <hr><br>
-<#if message?has_content>
-    <div class="error">${message}</div>
-</#if>
 </html>

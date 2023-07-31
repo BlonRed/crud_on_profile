@@ -50,10 +50,11 @@ public class ProfileService {
         if (!existsById(id)) {
             throw new Exception("Cannot find Profile with id: " + id);
         }
+        log.info("Delete {}", getProfileById(id));
         profileRepository.deleteById(id);
     }
 
-    public Profile createProfileFromCsv(MultipartFile uploadCsv) {
+    public Profile createProfileFromCsv(MultipartFile uploadCsv) throws Exception {
         return ProfileFromCsv.createProfileFromCsv(uploadCsv);
     }
 

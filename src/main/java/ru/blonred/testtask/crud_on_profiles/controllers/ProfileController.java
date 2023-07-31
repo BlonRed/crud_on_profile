@@ -30,7 +30,7 @@ public class ProfileController {
         return "profile-info";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/profile/add")
     public String showAddProfile(Model model) {
         Profile profile = new Profile();
         model.addAttribute("add", true);
@@ -38,16 +38,14 @@ public class ProfileController {
         return "profile-edit";
     }
 
-    @PostMapping("/add")
-    public String AddProfile(Model model,
-                             @ModelAttribute("profile") Profile profile) {
+    @PostMapping("/profile/add")
+    public String AddProfile(@ModelAttribute("profile") Profile profile) {
         try {
             Profile newProfile = profileService.saveProfile(profile);
             return "redirect:/profile/" + newProfile.getId();
         } catch (Exception exc) {
             String message = exc.getMessage();
-            model.addAttribute("message", message);
-            model.addAttribute("add", false);
+            System.out.println(message);
         }
         return "profiles";
     }
@@ -57,11 +55,10 @@ public class ProfileController {
                                   @PathVariable long profileId) {
         Profile profile = null;
         try {
-        profile = profileService.getProfileById(profileId);
+            profile = profileService.getProfileById(profileId);
         } catch (Exception exc) {
             String message = exc.getMessage();
-            model.addAttribute("message", message);
-            model.addAttribute("add", false);
+            System.out.println(message);
         }
         model.addAttribute("add", false);
         model.addAttribute("profile", profile);
@@ -69,8 +66,7 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/{profileId}/edit")
-    public String updateProfile(Model model,
-                                @PathVariable long profileId,
+    public String updateProfile(@PathVariable long profileId,
                                 @ModelAttribute("profile") Profile profile) {
         try {
             profile.setId(profileId);
@@ -78,34 +74,29 @@ public class ProfileController {
             return "redirect:/profile/" + profile.getId();
         } catch (Exception exc) {
             String message = exc.getMessage();
-            model.addAttribute("message", message);
-            model.addAttribute("add", false);
+            System.out.println(message);
         }
         return "profile-edit";
     }
 
     @PostMapping("/profile/upload")
-    public String uploadProfile(Model model,
-                                @RequestParam("profileCsv") MultipartFile profileCsv) {
+    public String uploadProfile(@RequestParam("profileCsv") MultipartFile profileCsv) {
         try {
             profileService.saveProfile(profileService.createProfileFromCsv(profileCsv));
         } catch (Exception exc) {
             String message = exc.getMessage();
-            model.addAttribute("message", message);
-            model.addAttribute("add", false);
+            System.out.println(message);
         }
         return "redirect:/";
     }
 
     @PostMapping("/profile/{id}/delete")
-    public String deleteProfile(Model model,
-                                @PathVariable Long id) {
+    public String deleteProfile(@PathVariable Long id) {
         try {
             profileService.deleteProfile(id);
         } catch (Exception exc) {
             String message = exc.getMessage();
-            model.addAttribute("message", message);
-            model.addAttribute("add", false);
+            System.out.println(message);
         }
         return "redirect:/";
     }
